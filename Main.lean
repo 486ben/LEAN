@@ -23,6 +23,9 @@ by
   apply h₁  -- 只要我们能提供 Q，我们就能从 h₁ : P → Q 得到它
   exact hp  -- 最后用 hp : P 得到 Q
 
+--print out some test
+#print implication_trans
+
 theorem test (p q : Prop) --number
 (hp : p)
 (hq : q)
@@ -32,7 +35,24 @@ theorem test (p q : Prop) --number
      apply And.intro
      exact hq
      exact hp
+
+--print out some test
 #print test
 
+--SOme example
+--example : <statement> := <proof>
+--example : <statement> :=
+--by
+  --<tactic steps>
+
+--correct example
+example : 2 + 2 = 4 :=
+by
+  rfl   -- reflexivity (both sides reduce to 4)
+
+--correct example
+example : 2 + 5 = 8 :=
+by
+  rfl   -- reflexivity (both sides reduce to 4)
 
 #eval Lean.versionString
