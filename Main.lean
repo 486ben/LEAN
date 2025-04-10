@@ -9,6 +9,8 @@ def main2 : IO Unit :=
 #eval main1
 #eval main2
 
+--another way to print
+#eval "ZhiBin" ++ " " ++ "Master" ++ " " ++ "Thesis"
 -- Another way to code
 def main : IO Unit := do
   IO.println "Hello, world!"
@@ -16,6 +18,25 @@ def main : IO Unit := do
 
 #eval main
 
+
+--CalculationWWW
+def x_1 := 10
+
+#eval x_1 + 3
+#eval x_1 - 9
+
+-- define a definition of double
+def double(x : Int) := 2 * x
+
+#eval double 10
+
+#check double
+
+--example
+example : double 4 = 8 := rfl
+
+
+--Theorem represent
 theorem implication_trans (P Q R : Prop)
   (h₁ : P → Q) (h₂ : Q → R) (hp : P) : R :=
 by
@@ -54,5 +75,31 @@ by
 example : 2 + 5 = 8 :=
 by
   rfl   -- reflexivity (both sides reduce to 4)
+
+--
+def twice (f : Nat → Nat) (a : Nat) := f (f a)
+-- → is \ + to
+-- is a function that takes a natural number and returns a natural number.
+-- a : Nat is a natural number.
+#print twice
+#check twice
+--twice (f : Nat → Nat) (a : Nat) : Na
+
+--double do the f * a = f (f a)
+#eval twice (fun x => x + 2) 10 --input x = 10
+--twice f a = f (f a)
+--→ f = (fun x => x + 2)
+--→ f(f(10)) = f(12) = 14
+
+
+#eval twice ( · + 5) 10
+-- first 10 + 5 = 15
+-- second 15 + 5 = 20
+--The dot · is type \ + .
+
+#eval twice ( · - 2) 10
+-- first 10 - 2 = 8
+-- second 8 - 2 = 6
+--The dot · is type \ + .
 
 #eval Lean.versionString
