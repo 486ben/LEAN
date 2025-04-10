@@ -1,4 +1,3 @@
-
 -- Definition and Theorem's name can't be the same name.
 def main1 : IO Unit :=
   IO.println "Hello, world!"
@@ -102,4 +101,19 @@ def twice (f : Nat → Nat) (a : Nat) := f (f a)
 -- second 8 - 2 = 6
 --The dot · is type \ + .
 
+--check natural number
+#check 2 = 2
+#check 0
+#check Nat
+#check Type
+#check Type 1
+
+--example
+example : Prop = Sort 0 := rfl
+example : Type = Sort 1 := rfl
+example : Type 1 = Sort 2 := rfl
+
+--lemma
+--lemma even_add_one {n : ℕ} : even n → odd (n + 1) := sorry
+--Version
 #eval Lean.versionString
