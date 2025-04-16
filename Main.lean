@@ -1,3 +1,10 @@
+import Mathlib.Algebra.Group.Basic
+
+-- 导入群论基础
+import Mathlib.Algebra.Group.Defs
+
+import Mathlib.Topology.Basic
+
 -- Definition and Theorem's name can't be the same name.
 def main1 : IO Unit :=
   IO.println "Hello, world!"
@@ -115,5 +122,31 @@ example : Type 1 = Sort 2 := rfl
 
 --lemma
 --lemma even_add_one {n : ℕ} : even n → odd (n + 1) := sorry
+
+variable (a b c d e : Nat)
+variable (h1 : a = b)
+variable (h2 : b = c + 1)
+variable (h3 : c = d)
+variable (h4 : e = 1 + d)
+
+--theorem T : a = e := by
+  -- 使用等式传递组合证明
+  --rw [h1, h2, h3, Nat.add_comm]
+  -- 自动验证最终等式
+  --<;> rfl
+
+-- 验证群定义
+#check Group
+-- 输出: Group : Type u → Type u
+
+-- 正确Lean函数定义
+def foo (x : Nat) : Nat :=
+  x + 1
+
+-- 函数调用示例
+#eval foo 1  -- 输出: 2
+
+#check a = e
+#check h1 = h1
 --Version
 #eval Lean.versionString
