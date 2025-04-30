@@ -150,3 +150,50 @@ def foo (x : Nat) : Nat :=
 #check h1 = h1
 --Version
 #eval Lean.versionString
+
+
+--Theorem compare to human written and LLM model
+
+--Example if a = b, then b = a. Human Written:
+example (a b : ℕ) (h : a = b) : b = a :=
+  Eq.symm h
+
+--LLM Written:
+theorem if_a_eq_b_then_eq : ∀ a b : ℕ, a = b → b = a := by
+  -- Introduce the variables `a` and `b`, and assume `h : a = b`.
+  intro a b h
+  -- Apply the symmetry of equality to get `b = a` from `a = b`.
+  exact Eq.symm h
+  -- Use `linarith` or `rfl` to confirm the equality.
+  --<;> linarith
+  -- The `<;>` operator chains tactics, applying each in sequence.
+  -- Here, it applies `linarith` after `rw [eq.symm]`.
+  -- However, since `a = b` directly implies `b = a`, we can use `rfl` for simplicity.
+ --<;> rfl
+
+
+----------------------------------------
+-- 人类风格手工证明版本（使用结构归纳）
+-- Human-style handwritten proof (using structural induction)
+lemma one_mul_handwritten (n : ℕ) : 1 * n = n := by
+  induction n with                -- 对 n 做归纳 / Do induction on n
+  | zero =>                      -- 基础情况：n = 0 / Base case: n = 0
+    rfl                          -- 1 * 0 = 0，根据乘法定义，直接成立 / Follows directly from definition
+  | succ n ih =>                 -- 归纳情况：n = succ n / Inductive step: n = succ n
+    simp [Nat.mul_succ, ih]      -- 使用乘法定义和归纳假设简化 / Use multiplication definition and induction hypothesis
+
+-- English explanation:
+-- `Nat.mul_succ` defines multiplication recursively: a * succ b = a * b + a
+-- `simp` applies this and simplifies using the induction hypothesis `ih`
+
+-- 中文解释：
+-- Nat.mul_succ 是 Lean 中乘法定义：a * succ b = a * b + a
+-- simp 会自动套用定义，然后使用归纳假设 ih 简化目标式
+
+--LLM Written:
+theorem leftIdentity : ∀ a : ℕ, 1 * a = a := by
+  intro a                        -- Introduce `a` into the goal
+  rw [Nat.one_mul]               -- Rewrite using the lemma `Nat.one_mul : 1 * a = a`
+  --simp                           -- Simplify the goal, which is now trivially true (1 * a = a)
+  -- The goal is now solved using `simp` since `1 * a = a` is directly simplified to `a`
+  --rfl                            -- The proof is complete, the goal is trivially `a = a
