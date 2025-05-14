@@ -14,10 +14,49 @@ import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
 
 open Real
 
+def m : Nat := 1       -- m is a natural number
+def n : Nat := 0
+def b1 : Bool := true  -- b1 is a Boolean
+def b2 : Bool := false
+
+#check m            -- output: Nat
+#check n
+#check n + 0        -- Nat
+#check m * (n + 0)  -- Nat
+#check b1           -- Bool
+#check b1 && b2     -- "&&" is the Boolean and
+#check b1 || b2     -- Boolean or
+#check true         -- Boolean "true"
+
+#eval 5 * 4         -- 20
+#eval m + 2         -- 3
+#eval b1 && b2      -- false
 
 #check Nat.mul_succ      -- ℕ → ℕ → ℕ
 #check Nat.add_one       -- ℕ → ℕ
 #check Nat.one_mul       -- ∀ a : ℕ, 1 * a = a
+
+#check fun (x : Nat) => x + 5   -- Nat → Nat
+#check λ (x : Nat) => x + 5     -- λ and fun mean the same thing
+#check fun x => x + 5     -- Nat inferred
+#check λ x => x + 5       -- Nat inferred
+
+#eval (λ x : Nat => x + 5) 10    -- 15
+
+variable (p q r : Prop)
+#check And     -- Prop → Prop → Prop
+#check Or      -- Prop → Prop → Prop
+#check Not     -- Prop → Prop
+
+#check And p q                      -- Prop
+#check Or (And p q) r               -- Prop
+
+variable {p : Prop}
+variable {q : Prop}
+theorem t1 : p → q → p := fun hp : p => fun hq : q => hp
+
+#print t1
+
 
 --Addition
 theorem Nat.add_comm_1 : ∀ a b : ℕ, a + b = b + a :=
@@ -164,3 +203,86 @@ theorem cos_double_alt (x : ℝ) : cos (2 * x) = cos x ^ 2 - sin x ^ 2 := by
 
 --#check x_rsin -- x : ℝ → ℝ → ℝ
 --#check y_rcos -- y : ℝ → ℝ → ℝ
+
+--practice:
+variable (p q r : Prop)
+
+-- commutativity of ∧ and ∨
+example : p ∧ q ↔ q ∧ p := sorry
+example : p ∨ q ↔ q ∨ p := sorry
+
+-- associativity of ∧ and ∨
+example : (p ∧ q) ∧ r ↔ p ∧ (q ∧ r) := sorry
+example : (p ∨ q) ∨ r ↔ p ∨ (q ∨ r) := sorry
+
+-- distributivity
+example : p ∧ (q ∨ r) ↔ (p ∧ q) ∨ (p ∧ r) := sorry
+example : p ∨ (q ∧ r) ↔ (p ∨ q) ∧ (p ∨ r) := sorry
+
+-- other properties
+open Classical
+example : (p → (q → r)) ↔ (p ∧ q → r) := sorry
+example : ((p ∨ q) → r) ↔ (p → r) ∧ (q → r) := sorry
+example : ¬(p ∨ q) ↔ ¬p ∧ ¬q := sorry
+example : ¬p ∨ ¬q → ¬(p ∧ q) := sorry
+example : ¬(p ∧ ¬p) := sorry
+example : p ∧ ¬q → ¬(p → q) := sorry
+example : ¬p → (p → q) := sorry
+example : (¬p ∨ q) → (p → q) := sorry
+example : p ∨ False ↔ p := sorry
+example : p ∧ False ↔ False := sorry
+example : (p → q) → (¬q → ¬p) := sorry
+
+example : (p → q ∨ r) → ((p → q) ∨ (p → r)) := sorry
+example : ¬(p ∧ q) → ¬p ∨ ¬q := sorry
+example : ¬(p → q) → p ∧ ¬q := sorry
+example : (p → q) → (¬p ∨ q) := sorry
+example : (¬q → ¬p) → (p → q) := sorry
+example : p ∨ ¬p := sorry
+example : (((p → q) → p) → p) := sorry
+
+
+variable (a b c : Nat)
+
+example : a + 0 = a := Nat.add_zero a
+example : 0 + a = a := Nat.zero_add a
+example : a * 1 = a := Nat.mul_one a
+example : 1 * a = a := Nat.one_mul a
+example : a + b = b + a := Nat.add_comm a b
+example : a + b + c = a + (b + c) := Nat.add_assoc a b c
+example : a * b = b * a := Nat.mul_comm a b
+example : a * b * c = a * (b * c) := Nat.mul_assoc a b c
+example : a * (b + c) = a * b + a * c := Nat.mul_add a b c
+example : a * (b + c) = a * b + a * c := Nat.left_distrib a b c
+example : (a + b) * c = a * c + b * c := Nat.add_mul a b c
+example : (a + b) * c = a * c + b * c := Nat.right_distrib a b c
+
+
+--some example
+variable (a b c d e : Nat)
+variable (h1 : a = b)
+variable (h2 : b = c + 1)
+variable (h3 : c + 1 = d + 1)
+variable (h4 : 1 + d = e)
+
+--Mine written, incorrect
+--theorem T : a = e :=
+  --calc
+    --a = b      := by rw [h1]
+    --_= c + 1  := by rw [h2]
+    --_= d + 1  := by rw [h3]
+    --_= 1 + d  := by rw [Nat.add_comm]
+    --_= e      := by rw [h4]
+
+theorem T (a b c d e : ℕ)
+  (h1 : a = b)
+  (h2 : b = c + 1)
+  (h3 : c + 1 = d + 1)
+  (h4 : 1 + d = e) :
+  a = e :=
+  calc
+    a = b      := by rw [h1]
+    _ = c + 1  := by rw [h2]
+    _ = d + 1  := by rw [h3]
+    _ = 1 + d  := by rw [Nat.add_comm]
+    _ = e      := by rw [h4]
