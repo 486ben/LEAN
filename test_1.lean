@@ -286,3 +286,35 @@ theorem T (a b c d e : ℕ)
     _ = d + 1  := by rw [h3]
     _ = 1 + d  := by rw [Nat.add_comm]
     _ = e      := by rw [h4]
+
+theorem T_1 (a b c d e : ℕ)
+  (h1 : a = b)
+  (h2 : b = c + 1)
+  (h3 : c + 1 = d + 1)
+  (h4 : 1 + d = e) : a = e :=
+
+  by rw [h1, h2, h3, Nat.add_comm, h4]
+
+theorem T_2 (a b c d : Nat)
+  (h1 : a = b)
+  (h2 : b ≤ c)
+  (h3 : c + 1 < d) : a < d :=
+
+  calc
+  a = b       := h1
+  _ ≤ c       := h2
+  _ ≤ c + 1   := Nat.le_succ c
+  _ < d       := h3
+
+  --calc
+  --a = b     := by rw[h1]
+  --_ ≤ c     := by rw[h2]
+  --_ ≤ c + 1 := by rw[Nat.le_succ c]
+  --_ ≤ d     := by rw[h3]
+
+theorem T_3 (x y : Nat) : (x + y) * (x + y) = x * x + y * x + x * y + y * y :=
+  calc
+  (x + y) * (x + y) = (x + y) * x + (x + y) * y  := by rw [Nat.mul_add]
+    _ = x * x + y * x + (x + y) * y                := by rw [Nat.add_mul]
+    _ = x * x + y * x + (x * y + y * y)            := by rw [Nat.add_mul]
+    _ = x * x + y * x + x * y + y * y              := by rw [←Nat.add_assoc]
