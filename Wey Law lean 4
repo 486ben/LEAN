@@ -56,7 +56,9 @@ def toBoundedDomain (R : Rectangle) : BoundedDomain where
     nlinarith [abs_lt.mpr ⟨by linarith, by linarith⟩]
   nonempty := by
     -- The midpoint is always inside the rectangle
-    refine ⟨(R.x_min + R.x_max)/2, (R.y_min + R.y_max)/2, ?_⟩
+    have midpoint : ℝ × ℝ := ((R.x_min + R.x_max)/2, (R.y_min + R.y_max)/2)
+    refine ⟨midpoint, ?_⟩
+    simp [midpoint]
     constructor <;> nlinarith
 
 /-- Area of a rectangle -/
