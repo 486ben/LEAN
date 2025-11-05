@@ -8,6 +8,9 @@ The LEAN 4 project contains my exploratory work on formalizing parts of the Weyl
 
 1. File Main.lean and test_1.lean are inspired by examples found online and serves as both a learning exercise
 2. File Wey Law lean 4 is the prototype (Chapter 5), where I discuss the the proof and lean 4 about the Weyl asymptotic formula.
+3. Python File with 1D,2D,3D will better show the ideas of Laplacian operator and wey law: https://colab.research.google.com/drive/1ZmCqLNCnyB3Km47dtLFjR-bNuIEGL67C?usp=sharing
+
+# Wey Law lean 4 prototype's idea.
 
 # A big thanks to LEAN Community.
 References Github User: 
