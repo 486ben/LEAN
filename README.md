@@ -11,6 +11,17 @@ The LEAN 4 project contains my exploratory work on formalizing parts of the Weyl
 3. Python File with 1D,2D,3D will better show the ideas of Laplacian operator and wey law: https://colab.research.google.com/drive/1ZmCqLNCnyB3Km47dtLFjR-bNuIEGL67C?usp=sharing
 
 # Wey Law lean 4 prototype's idea.
+Inside the Weyl Law Lean 4, I begins by importing several core components from Mathlib, including foundational results in real analysis, topology, metric spaces, measure theory, and trigonometric functions. These imports provide the necessary math framework to formalize concepts such as bounded domains, open sets, and eigenvalues of the Laplacian.
+
+Inside the file, the code outlines a structured three step template inspired by the proof strategy described in Chapter 5.1 of my thesis. Although the proofs are not yet complete, this framework serves as a reference for future formalization work:
+
+Step 1: We need to first show the Rectangular Domains – Defines rectangles in ℝ², shows they form bounded open sets, and states Weyl’s Law for rectangular regions.
+
+Step 2: We need to show the Finite Unions of Rectangles – Extends the theory to finite unions of disjoint rectangles, establishing their area, boundedness, and a formal statement of Weyl’s Law for these composite domains.
+
+Step 3: We need to show the Approximation and General Domains – Introduces inner and outer approximations of arbitrary bounded domains by rectangles, setting up the framework for proving Weyl’s Law in the general case via approximation arguments and eigenvalue monotonicity.
+
+Although many parts are marked with sorry (placeholders for unfinished proofs), the code provides a conceptual and syntactic foundation for formalizing the Weyl asymptotic formula within Lean 4. Because many results are still missing from Mathlib, this file functions could be an roadmap for later researchers who wish to continue the formalization.
 
 # A big thanks to LEAN Community.
 References Github User: 
